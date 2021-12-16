@@ -13,13 +13,45 @@
     </form>
 
     <script>
-      let $tooltip = $("#tooltip");
+      (function() {
+        document.onmousemove = handleMouseMove;
+        function handleMouseMove(event) {
+            var eventDoc, doc, body;
 
-      $(document).on("mousemove", function(event) {
+            event = event || window.event; // IE-ism
+
+            // If pageX/Y aren't available and clientX/Y are,
+            // calculate pageX/Y - logic taken from jQuery.
+            // (This is to support old IE)
+            if (event.pageX == null && event.clientX != null) {
+                eventDoc = (event.target && event.target.ownerDocument) || document;
+                doc = eventDoc.documentElement;
+                body = eventDoc.body;
+
+                event.pageX = event.clientX +
+                  (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+                  (doc && doc.clientLeft || body && body.clientLeft || 0);
+                event.pageY = event.clientY +
+                  (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
+                  (doc && doc.clientTop  || body && body.clientTop  || 0 );
+            }
+
+            // Use event.pageX / event.pageY here
+            let pagex = event.pageX;
+            let pagey = event.pageY;
+          }
+      })();
+
+      /* let $tooltip = $("#tooltip");
+
+      /*$(document).on("mousemove", function(event) {
         $tooltip.css({left: event.pageX, top: event.pageY});
-      });
+      });*/
+      /*$(document).on("mousemove", function(e)) {
+        $tooltip.css({left: pagex, top: pagey});
+      }*/
     </script>
 
-    <div id="tooltip"></div>
+    <div id="tooltip"> {{ emoji }} </div>
   </body>
 </html>
