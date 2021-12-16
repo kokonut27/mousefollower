@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="text/css" />
+  </head>
+  <body>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+
+    <form method="POST" action="/">
+      <input placeholder="Enter emoji" name="emoji" autocomplete="off" required><br>
+      <button>Switch</button>
+    </form>
+
+    <script>
+      let $tooltip = $("#tooltip");
+
+      $(document).on("mousemove", function(event) {
+        $tooltip.css({left: event.pageX, top: event.pageY});
+      });
+    </script>
+
+    <div id="tooltip"></div>
+  </body>
+</html>
